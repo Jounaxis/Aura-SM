@@ -9,6 +9,8 @@ export default function Menu(){
         <Link to='/consultas'>Consultas</Link>
         <span> | </span>
         <Link to='/agendas'>Agendas</Link>
+        <span> | </span>
+        <Link to='/historico'>Histórico</Link>
     </nav>
   )
 }
