@@ -1,4 +1,4 @@
-export default function Agendas{
+export default function Agendas(){
 
     return(
         <main>

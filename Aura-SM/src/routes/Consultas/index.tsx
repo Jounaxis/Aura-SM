@@ -1,4 +1,4 @@
-export default function Consultas{
+export default function Consultas(){
 
     return(
         <main>
