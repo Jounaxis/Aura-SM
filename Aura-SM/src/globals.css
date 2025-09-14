@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root{
+    scroll-behavior: smooth;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+}
+
+@layer{
+    
+    .container{
+        @apply h-screen w-full flex flex-col;
+
+        & header{
+            @apply bg-white h-[20vh] w-[100vw] border-b dark:bg-neutral-900 text-white flex flex-col items-center justify-between p-5;
+            & h1{
+                @apply text-3xl font-bold text-black dark:text-white;
+            }
+
+            & nav{
+                @apply flex gap-5;
+                & a{
+                    @apply text-black dark:text-white hover:underline;
+
+                }
+            }
+        }
+
+        & main{
+            @apply bg-amber-50 h-[60vh] w-[100vw] overflow-auto;
+        }
+
+        & footer{
+            @apply bg-white h-[20vh] w-[100vw] border-b dark:bg-neutral-900 text-white flex flex-col items-center justify-end p-5
+        }
+
+    }
+
+    .tblProdutos{
+        @apply w-[90%] mx-auto my-5 border-2 border-black bg-white text-black;
+        & th, td{
+            @apply border-2 border-black p-2;
+
+            & a{
+                @apply text-black hover:underline;
+
+                & svg{
+                    @apply block mx-auto text-2xl hover:text-amber-300;
+                }
+
+            }
+        }
+        & th{
+            @apply bg-amber-300;
+        }
+    }
+
+}
