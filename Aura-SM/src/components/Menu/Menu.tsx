@@ -5,12 +5,14 @@ export default function Menu(){
   return(
     <nav>
         <Link to='/'>Home</Link>
-
+        <span> | </span>
         <Link to='/consultas'>Consultas</Link>
-
-        <Link to='/agendas'>Agendas</Link>
-
+        <span> | </span>
+        <Link to='/agendar'>Agendar</Link>
+        <span> | </span>
         <Link to='/historico'>Histórico</Link>
+        <span> | </span>
+        <Link to='/integrantes'>Integrantes</Link>
     </nav>
   )
 }

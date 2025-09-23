@@ -7,27 +7,31 @@
 body{
     width: 100vw;
     height: 100vh;
+}
     
-    @layer components {
-        .container {
-            @apply h-screen w-full flex flex-col;
+@layer{
+    
+    .container {
+        @apply h-screen w-full flex flex-col;
             
-            & header {
-                @apply flex justify-between items-center h-[15vh] w-[100vw] flex-wrap bg-white border-b border-gray-300 sticky top-0 z-[999];
+        & header {
+            @apply bg-white h-[15vh] w-[100vw] border-b flex justify-between items-center flex-wrap p-5;
+            & h1{
+                @apply text-3xl font-bold text-black;
+            }
                 
-                & nav {
-                    @apply flex items-center gap-[40px] border-l border-gray-400 pl-[40px];
-                }
-            }
-            
-            & main {
-                @apply flex w-full flex-col justify-center items-center h-[100vh] w-[100vw] bg-gray-50 text-[100%] transition-all duration-300 m-0 p-0;
-            }
-            
-            & footer {
-                @apply bg-black text-white text-center h-[15vh] w-[100vw] text-[14px];
+            & nav {
+                @apply flex items-center gap-[30px] border-l pl-[30px];
             }
         }
-        
+            
+        & main {
+            @apply flex w-full flex-col justify-center items-center h-[100vh] w-[100vw] bg-gray-50 text-[100%] ;
+        }
+            
+        & footer {
+            @apply bg-black text-white text-center h-[15vh] w-[100vw] text-[14px];
+        }
     }
+        
 }

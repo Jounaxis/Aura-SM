@@ -3,7 +3,7 @@ import React from 'react'
 
 const Home: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
         Portal de Auto-Atendimento
       </h1>
@@ -27,7 +27,7 @@ const Home: React.FC = () => {
         
         {/* Adicione os outros cards similares */}
       </div>
-    </div>
+    </main>
   )
 }
 

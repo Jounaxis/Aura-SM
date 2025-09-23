@@ -5,18 +5,20 @@ import "./globals.css"
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './routes/Home/index.jsx'
-import Agendas from './routes/Agendas/index.jsx'
+import Agendar from './routes/Agendar/index.js'
 import Consultas from './routes/Consultas/index.jsx'
 import Historico from './routes/Historico/indedx.tsx'
+import Integrantes from './routes/Integrantes/index.tsx'
 import Error from './routes/Error/index.jsx'
 
 const router = createBrowserRouter([
   {path: "/", element: <App/>, errorElement: <Error/>,
     children: [
       {path: "/", element: <Home/>},
-      {path: "/Agendas", element: <Agendas/>},
+      {path: "/Agendar", element: <Agendar/>},
       {path: "/Consultas", element: <Consultas/>},
-      {path: "/Historico", element: <Historico/>}
+      {path: "/Historico", element: <Historico/>},
+      {path: "/Integrantes", element: <Integrantes/>}
     ]
   }
 ])

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Agendas: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
         Agendamento de Consultas
       </h1>
@@ -77,7 +77,7 @@ const Agendas: React.FC = () => {
           </table>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Historico: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
         Histórico Médico
       </h1>
@@ -77,7 +77,7 @@ const Historico: React.FC = () => {
           </table>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

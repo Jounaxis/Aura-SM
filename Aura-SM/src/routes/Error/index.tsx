@@ -7,7 +7,7 @@ const Error: React.FC = () => {
   console.error(error)
 
   return (
-    <div className="container mx-auto px-4 py-8 text-center">
+    <main className="container mx-auto px-4 py-8 text-center">
       <div className="max-w-md mx-auto">
         <h1 className="text-9xl font-bold text-blue-600">404</h1>
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Página não encontrada</h2>
@@ -21,7 +21,7 @@ const Error: React.FC = () => {
           Voltar para o início
         </Link>
       </div>
-    </div>
+    </main>
   )
 }
 
