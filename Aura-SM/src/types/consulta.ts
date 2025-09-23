@@ -1,6 +1,7 @@
-
-export type ConsultaType ={
-    id:number;
-    nome:string;
-    especialidade:string;
-}
+export type ConsultaType = {
+    id: number;
+    medicoId: number | string; 
+    pacienteNome: string;
+    data: string;
+    hora: string;
+};

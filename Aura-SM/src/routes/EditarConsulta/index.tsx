@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import type { MedicoType } from "../../types/medico";
+import { useNavigate, useParams } from "react-router-dom";
+import type { ConsultaType } from "../../types/consulta";
+import type { MedicoType } from "../../types/medico"; // Importar a tipagem correta para médicos
 
-export default function Agendar() {
+export default function EditarConsulta() {
+
+    const { id } = useParams<string>();
 
     const navigate = useNavigate();
 
-    const [consulta, setConsulta] = useState({
+    const [consulta, setConsulta] = useState<ConsultaType>({
         id: 0,
         medicoId: '',
         pacienteNome: '',
@@ -14,40 +17,53 @@ export default function Agendar() {
         hora: ''
     });
 
-    const [medicos, setMedicos] = useState<MedicoType[]>([]);
+    const [medicos, setMedicos] = useState<MedicoType[]>([]); // Corrigido aqui
 
     useEffect(() => {
-        // Simula a busca por médicos disponíveis
-        const fetchMedicos = async () => {
-            const response = await fetch("http://localhost:3001/medicos");
-            const data:MedicoType[] = await response.json();
-            setMedicos(data);
+        const fetchConsultaAndMedicos = async () => {
+            // Fetch the specific consultation data
+            const responseConsulta = await fetch(`http://localhost:3001/consultas/${id}`);
+            const dataConsulta: ConsultaType = await responseConsulta.json();
+            setConsulta(dataConsulta);
+
+            // Fetch all doctors to populate the select dropdown
+            const responseMedicos = await fetch("http://localhost:3001/medicos");
+            const dataMedicos: MedicoType[] = await responseMedicos.json(); // Corrigido aqui
+            setMedicos(dataMedicos);
         };
 
-        fetchMedicos();
-    }, []);
+        fetchConsultaAndMedicos();
+    }, [id]);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Lógica para enviar os dados da nova consulta para o servidor
-        await fetch(`http://localhost:3001/consultas`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(consulta)
-        });
-        alert('Consulta agendada com sucesso!');
-        
-        // Redireciona para a página de listagem de consultas após o agendamento
-        navigate('/consultas');
+        try {
+            // Logic to send the updated data to the server
+            await fetch(`http://localhost:3001/consultas/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(consulta)
+            });
+            alert('Consulta atualizada com sucesso!');
+
+            // Redirect to the consultation listing page after the update
+            navigate('/consultas');
+
+        } catch (error) {
+            console.error("Erro ao atualizar a consulta:", error);
+            alert("Erro ao atualizar a consulta.");
+        }
     }
 
-   return (
+
+    return (
         <main className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
-                Agendar Nova Consulta
+                Editar Consulta
             </h1>
             <div className="bg-white rounded-lg shadow-md p-6">
                 <form onSubmit={handleSubmit}>
@@ -102,13 +118,13 @@ export default function Agendar() {
                     <div>
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                            className="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:shadow-outline"
                         >
-                            Agendar
+                            Salvar Alterações
                         </button>
                     </div>
                 </form>
             </div>
         </main>
     );
-  }
+}
