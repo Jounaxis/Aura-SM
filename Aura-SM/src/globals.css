@@ -25,8 +25,8 @@ body{
             }
         }
             
-        & main {
-            @apply flex w-full flex-col justify-center items-center h-[100vh] w-[100vw] bg-gray-50 text-[100%] ;
+         & main {
+           @apply flex flex-col items-center bg-gray-50 text-[100%] h-[100vh] w-[100vw] overflow-auto;
         }
             
         & footer {
