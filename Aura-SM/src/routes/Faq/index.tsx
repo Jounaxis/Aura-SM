@@ -1,4 +1,4 @@
-export default function Integrantes(){
+export default function Faq(){
 
     return(
         <main>
