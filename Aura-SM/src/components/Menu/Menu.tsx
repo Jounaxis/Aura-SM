@@ -6,11 +6,9 @@ export default function Menu(){
     <nav>
         <Link to='/'>Home</Link>
         <span> | </span>
-        <Link to='/consultas'>Consultas</Link>
+        <Link to='/sobre'>Sobre</Link>
         <span> | </span>
-        <Link to='/agendar'>Agendar</Link>
-        <span> | </span>
-        <Link to='/historico'>Histórico</Link>
+        <Link to='/faq'>FAQ</Link>
         <span> | </span>
         <Link to='/integrantes'>Integrantes</Link>
     </nav>
