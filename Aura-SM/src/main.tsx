@@ -12,6 +12,7 @@ import EditarConsulta from './routes/EditarConsulta/index.tsx'
 import Integrantes from './routes/Integrantes/index.tsx'
 import Faq from './routes/Faq/index.tsx'
 import Sobre from './routes/Sobre/index.tsx'
+import Contato from './routes/Contato/index.tsx'
 import Error from './routes/Error/index.jsx'
 
 const router = createBrowserRouter([
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       {path: "/historico", element: <Historico/>},
       {path: "/integrantes", element: <Integrantes/>},
       {path: "/sobre", element: <Sobre/>},
+      {path: "/contato", element: <Contato/>},
       {path: "/faq", element: <Faq/>}
     ]
   }

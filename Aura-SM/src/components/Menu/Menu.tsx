@@ -19,6 +19,7 @@ export default function Menu(){
       <NavLink to='/sobre' className={getLink}>Sobre</NavLink>
       <NavLink to='/faq' className={getLink}>FAQ</NavLink>
       <NavLink to='/integrantes' className={getLink}>Integrantes</NavLink>
+      <NavLink to='/contato' className={getLink}>Contato</NavLink>
     </nav>
   )
 }
