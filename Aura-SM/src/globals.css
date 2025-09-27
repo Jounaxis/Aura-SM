@@ -21,7 +21,7 @@ body{
             }
                 
             & nav {
-                @apply flex items-center gap-[30px] border-l pl-[30px];
+                @apply flex items-center border-l pl-[30px];
             }
         }
             
