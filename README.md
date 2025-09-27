@@ -131,6 +131,53 @@ Abaixo de cada consulta, o usuário tem acesso a duas ações principais:
 1.  **Editar:** O botão "Editar" é um **`Link`** que direciona para a rota de edição (`/editar/consulta/:id`), permitindo que o usuário modifique os detalhes do agendamento.
 2.  **Cancelar:** O botão "Cancelar" aciona a função **`handleDelete`**, que executa uma chamada de API usando o **método `DELETE`** no *endpoint* específico da consulta (`/consultas/:id`). Após a exclusão bem-sucedida, o estado **`consultas`** é atualizado para remover o item cancelado, refletindo a mudança na interface instantaneamente.
 
+---
+
+# Rota EditarConsulta: Modificação de Agendamentos
+
+O componente **`EditarConsulta`** é a rota de **Atualização (*Update*)** do portal. Sua principal função é permitir que o usuário modifique os detalhes de uma consulta que já está agendada, como trocar o médico, ajustar a data ou corrigir o horário.
+
+## Fluxo de Carregamento e Pré-Preenchimento
+
+O componente é acessado através do `id` da consulta (usando `useParams`) e foi construído para ser um **formulário pré-preenchido**:
+
+1.  **Carga Dupla de Dados:** Um único `useEffect` busca a lista completa de **médicos** (para o *dropdown* de seleção) e os **dados da consulta específica** (`GET /consultas/:id`).
+2.  **Preparação do Formulário:** O *hook* `reset` do **`react-hook-form`** é utilizado para injetar os dados da consulta carregada nos campos correspondentes, permitindo que o usuário veja as informações atuais antes de alterá-las.
+
+## Transação de Atualização (`PUT`)
+
+A lógica de submissão (**`onSubmit`**) gerencia a transação de atualização:
+
+* **Validação:** O formulário valida se todos os campos obrigatórios estão preenchidos corretamente.
+* **Requisição:** Em caso de sucesso na validação, ele envia os dados modificados através do método **`PUT`** para o *endpoint* da consulta específica (`/consultas/:id`).
+* **Feedback:** Um componente auxiliar **`StatusMessage`** exibe mensagens claras de sucesso ou erro para o usuário.
+* **Redirecionamento:** Após a confirmação bem-sucedida da API, o usuário é automaticamente enviado de volta para a tela **`Consultas`**, onde o agendamento já aparece com as informações atualizadas.
+
+---
+
+# Resumo Final do Portal e Cobertura CRUD
+
+Com a inclusão da rota **`EditarConsulta`**, o sistema atinge a **cobertura completa das quatro operações fundamentais do CRUD** (Create, Read, Update, Delete) no gerenciamento de agendamentos, elevando-o a um sistema de gestão robusto.
+
+## Complementaridade dos Componentes
+
+Os componentes trabalham em conjunto para cobrir o ciclo de vida completo do agendamento:
+
+* **`Home`:** Centraliza e direciona o usuário para as áreas de criação e gestão.
+* **`Agendar`:** Responsável pela **Criação** (`POST`) de novos registros.
+* **`Consultas`:** Permite a **Leitura** (`GET`) de agendamentos ativos, o **Cancelamento** (`DELETE`) de agendamentos e serve como ponto de partida para a **Atualização** (link para `EditarConsulta`).
+* **`EditarConsulta`:** Executa a função de **Atualização** (`PUT`) do agendamento.
+* **`Historico`:** Focado na **Leitura** e **Análise** de registros passados, com funcionalidade de filtro por data.
+
+## Tecnologias Chave em Resumo
+
+O portal utiliza uma arquitetura moderna baseada nos seguintes pilares:
+
+* **Base:** **React** e **TypeScript** para desenvolvimento de componentes tipados.
+* **Navegação:** **`react-router-dom`** gerencia rotas, links, parâmetros (`useParams`) e redirecionamentos programáticos (`useNavigate`).
+* **Formulários:** **`react-hook-form`** é a solução para gerenciar o estado, a validação e, crucialmente, o **pré-preenchimento** dos dados existentes na edição.
+* **Comunicação:** O método **`fetch`** implementa todas as requisições à API, cobrindo o ciclo completo do agendamento: `POST` (Criar), `GET` (Ler), `PUT` (Atualizar) e `DELETE` (Cancelar).
+
 # Rota Histórico: Visualizador de Registros Médicos
 
 O componente **`Historico`** é a interface dedicada a apresentar ao usuário seu **histórico completo de atendimentos médicos**. Ele foi projetado para carregar todos os registros de consultas passadas, correlacioná-los com as informações dos médicos responsáveis e oferecer uma ferramenta eficiente para a busca e filtragem por período.
@@ -182,30 +229,37 @@ O conjunto de componentes analisados (`Home`, `Agendar`, `Consultas`, e `Histori
 
 ---
 
+# Visão Geral e Complementaridade do Portal de Saúde
+
+O conjunto de componentes analisados (**`Home`**, **`Agendar`**, **`Consultas`**, **`Historico`** e **`EditarConsulta`**) forma um sistema coeso de **Portal de Auto-Atendimento Médico**. Eles se complementam ao mapear o ciclo completo da jornada do paciente, desde a primeira navegação até o gerenciamento e consulta de seus registros de saúde.
+
 ## O Fluxo Integrado dos Componentes
 
 O portal foi projetado para guiar o usuário de forma lógica através de suas necessidades médicas:
 
-### 1. Ponto de Partida e Navegação: Componente `Home`
+1.  Ponto de Partida e Navegação: Componente `Home`
+O **`Home`** atua como o painel principal e agregador. Ele centraliza os serviços e fornece os links de navegação essenciais. Sua função é direcionar o usuário para as áreas de criação de serviço (`Agendar`) e gerenciamento de dados (`Consultas` e `Historico`), unindo todas as funcionalidades em uma única tela de fácil acesso.
 
-O **`Home`** atua como o **painel principal e agregador**. Ele centraliza os serviços e fornece os links de navegação essenciais. Sua função é direcionar o usuário para as áreas de **criação de serviço** (`Agendar`) e **gerenciamento de dados** (`Consultas` e `Historico`), unindo todas as funcionalidades em uma única tela de fácil acesso.
+2.  Criação de Serviço: Componente `Agendar`
+A rota **`Agendar`** é a interface transacional. Ela busca a lista de médicos (`GET /medicos`) e utiliza um formulário robusto (`react-hook-form`) para coletar os dados de uma nova consulta. Após a submissão bem-sucedida (`POST /consultas`), o componente redireciona o usuário para a página `Consultas`, confirmando o ciclo de agendamento.
 
-### 2. Criação de Serviço: Componente `Agendar`
+3.  Gestão Ativa, Modificação e Visualização: `Consultas`, **`EditarConsulta`** e `Historico`
+Estas rotas lidam com a gestão do ciclo de vida dos agendamentos, cobrindo o ciclo completo de **CRUD** (Criação, Leitura, **Atualização** e Exclusão):
 
-A rota **`Agendar`** é a **interface transacional**. Ela busca a lista de médicos (`GET /medicos`) e utiliza um formulário robusto (`react-hook-form`) para coletar os dados de uma nova consulta. Após a submissão bem-sucedida (`POST /consultas`), o componente **redireciona** o usuário para a página `Consultas`, confirmando o ciclo de agendamento.
+* **`Consultas` (Consultas Ativas):** Focado no futuro e na interação ativa. Ele busca as consultas (`GET /consultas`) e a lista de médicos, permitindo ao usuário **cancelar agendamentos** (`DELETE /consultas/:id`) e fornece o link para a **edição**. Ele exibe os dados criados pelo componente `Agendar`.
 
-### 3. Gestão Ativa e Visualização: `Consultas` e `Historico`
+* **`EditarConsulta` (Atualização/Update):** Este componente é o responsável por toda a lógica de **modificação de agendamentos**. Ele utiliza `useParams` para obter o ID da consulta e um `useEffect` para carregar o registro (`GET /consultas/:id`) e **pré-preencher** o formulário. O envio de dados é feito através do método **`PUT`**, garantindo que as alterações sejam salvas. Após a atualização, ele redireciona o usuário para a tela `Consultas`.
 
-Estas duas rotas lidam com a gestão do ciclo de vida dos agendamentos:
-
-* **`Consultas` (Consultas Ativas):** Focado no futuro e na **interação ativa**. Ele busca as consultas (`GET /consultas`) e a lista de médicos, permitindo ao usuário **cancelar agendamentos** (`DELETE /consultas/:id`) e navegar para a edição. Ele exibe os dados criados pelo componente `Agendar`.
-* **`Historico` (Consultas Passadas):** Focado na **análise e consulta** de registros já concluídos. Ele busca o histórico (`GET /historico`), cruza as informações com os dados dos médicos, e implementa uma poderosa lógica de **filtragem dinâmica por período**, tornando mais fácil a localização de registros passados.
+* **`Historico` (Consultas Passadas):** Focado na análise e consulta de registros já concluídos. Ele busca o histórico (`GET /historico`), cruza as informações com os dados dos médicos, e implementa uma poderosa lógica de **filtragem dinâmica por período**, tornando mais fácil a localização de registros passados.
 
 ## Resumo das Ferramentas e Tecnologias
 
 O sistema é construído sobre uma base moderna de desenvolvimento *frontend*, garantindo segurança, usabilidade e eficiência na comunicação com o *backend*.
 
-* **Tecnologias de Base:** **React** e **TypeScript** formam a estrutura do código, fornecendo componentes reativos e tipagem rigorosa para evitar erros.
-* **Gerenciamento de Fluxo:** **`react-router-dom`** é essencial para a **navegação** (links) e o **controle de fluxo** (redirecionamento com `useNavigate`).
-* **Comunicação com API (CRUD):** O portal utiliza chamadas **`fetch`** para realizar as quatro operações básicas: **Criação** (`POST` em `Agendar`), **Leitura** (`GET` em todas as páginas), **Atualização** (implícita no link de edição em `Consultas`) e **Exclusão** (`DELETE` em `Consultas`).
-* **Usabilidade:** **`react-hook-form`** simplifica a coleta de dados e a **validação** em `Agendar`, enquanto os *hooks* **`useEffect`** e **`useState`** são usados em todas as rotas para gerenciar o estado da aplicação, os dados das APIs e as lógicas de filtro.
+Tecnologias de Base: **React** e **TypeScript** formam a estrutura do código, fornecendo componentes reativos e tipagem rigorosa para evitar erros.
+
+Gerenciamento de Fluxo: **`react-router-dom`** é essencial para a navegação (links), extração de **parâmetros de rota** (`useParams` em `EditarConsulta`) e o controle de fluxo (redirecionamento com `useNavigate`).
+
+Comunicação com API (CRUD): O portal utiliza chamadas `fetch` para realizar as quatro operações básicas: Criação (`POST` em `Agendar`), Leitura (`GET` em todas as páginas), **Atualização** (`PUT` em `EditarConsulta`), e Exclusão (`DELETE` em `Consultas`).
+
+Usabilidade: **`react-hook-form`** simplifica a coleta de dados e a validação em `Agendar` e, de forma crítica, lida com o **pré-preenchimento** e a validação do formulário em **`EditarConsulta`**, enquanto os *hooks* `useEffect` e `useState` são usados em todas as rotas para gerenciar o estado da aplicação, os dados das APIs e as lógicas de filtro.

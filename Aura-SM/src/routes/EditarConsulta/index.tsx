@@ -3,8 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import type { ConsultaType } from "../../types/consulta";
 import type { MedicoType } from "../../types/medico";
 import { useForm } from "react-hook-form";
-const URL_API = import.meta.env.VITE_API_URL_BASE;
 
+// Simula a variável de ambiente VITE_API_URL_BASE (se a real não estiver disponível)
+const URL_API = "http://localhost:3001"; 
+
+// Componente para exibir mensagens de status
 interface StatusMessageProps {
     type: 'success' | 'error';
     message: string;
@@ -24,34 +27,40 @@ const StatusMessage: React.FC<StatusMessageProps> = ({ type, message }) => {
     );
 }
 
-
 export default function EditarConsulta() {
     
     const { id } = useParams<string>();
     const navigate = useNavigate();
     
+    // Estado para armazenar a lista de médicos
     const [medicos, setMedicos] = useState<MedicoType[]>([]); 
+    // Estado para controlar a mensagem de feedback
     const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
+    // Configuração do react-hook-form
     const { 
         register, 
         handleSubmit, 
-        reset, 
+        reset, // Usado para preencher o formulário
         formState: { errors } 
     } = useForm<ConsultaType>({
         mode: "onChange"
     });
 
+    // Efeito para carregar a consulta, a lista de médicos e definir o título
     useEffect(() => {
         const fetchConsultaAndMedicos = async () => {
             try {
+                // Busca a lista de médicos
                 const responseMedicos = await fetch(`${URL_API}/medicos`);
                 const dataMedicos: MedicoType[] = await responseMedicos.json(); 
                 setMedicos(dataMedicos);
 
+                // Busca a consulta específica
                 const responseConsulta = await fetch(`${URL_API}/consultas/${id}`);
                 const dataConsulta: ConsultaType = await responseConsulta.json();
                 
+                // Preenche o formulário com os dados da consulta
                 reset(dataConsulta);
 
             } catch (error) {
@@ -62,9 +71,12 @@ export default function EditarConsulta() {
 
         fetchConsultaAndMedicos();
         
+        // Define o título da página
         document.title = 'Editar Consulta';
     }, [id, reset]);
 
+
+    // Função de submissão do formulário
     const onSubmit = async (data: ConsultaType) => {
         setStatusMessage(null);
         
@@ -81,15 +93,16 @@ export default function EditarConsulta() {
                 throw new Error(`Erro de rede: ${response.statusText}`);
             }
 
-            setStatusMessage({ type: 'success', message: 'Consulta atualizada com sucesso!' });
+            setStatusMessage({ type: 'success', message: '✅ Consulta atualizada com sucesso!' });
             
+            // Redireciona após um pequeno delay para que o usuário veja a mensagem
             setTimeout(() => {
                  navigate('/consultas');
             }, 1500);
 
         } catch (error) {
             console.error("Erro ao atualizar a consulta:", error);
-            setStatusMessage({ type: 'error', message: 'Erro ao atualizar a consulta. Tente novamente.' });
+            setStatusMessage({ type: 'error', message: '❌ Erro ao atualizar a consulta. Tente novamente.' });
         }
     }
 
@@ -97,6 +110,7 @@ export default function EditarConsulta() {
     return (
         <main>
             <div className="container mx-auto px-4 py-8">
+
                 <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Editar Consulta</h1>
                 <div className="bg-white rounded-lg shadow-xl p-8 max-w-lg mx-auto">
                     
@@ -110,7 +124,7 @@ export default function EditarConsulta() {
                             <select
                                 id="idMedico"
                                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors.medicoId ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
-
+                                // Integração com register e validação
                                 {...register("medicoId", { required: "O médico é obrigatório." })}
                                 >
                                 <option value="">Selecione um médico</option>
@@ -130,6 +144,7 @@ export default function EditarConsulta() {
                                 id="idPaciente"
                                 placeholder="Nome completo do paciente"
                                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors.pacienteNome ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                // Integração com register e validação
                                 {...register("pacienteNome", { 
                                     required: "O nome do paciente é obrigatório.", 
                                     minLength: {
@@ -147,6 +162,7 @@ export default function EditarConsulta() {
                                 type="date"
                                 id="idData"
                                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors.data ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                // Integração com register
                                 {...register("data", { required: "A data é obrigatória." })}
                                 />
                             {errors.data && <p className="text-red-500 text-xs italic mt-1">{errors.data.message}</p>}
@@ -158,6 +174,7 @@ export default function EditarConsulta() {
                                 type="time"
                                 id="idHora"
                                 className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors.hora ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                // Integração com register
                                 {...register("hora", { required: "A hora é obrigatória." })}
                                 />
                             {errors.hora && <p className="text-red-500 text-xs italic mt-1">{errors.hora.message}</p>}
