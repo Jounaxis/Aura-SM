@@ -51,13 +51,5 @@
       "especialidade": "Psiquiatria"
     }
   ],
-  "consultas": [
-    {
-      "id": "273a",
-      "medicoId": "1",
-      "pacienteNome": "Habdala",
-      "data": "2025-09-28",
-      "hora": "13:00"
-    }
-  ]
+  "consultas": []
 }

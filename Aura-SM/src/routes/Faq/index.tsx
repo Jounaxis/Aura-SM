@@ -57,7 +57,6 @@ export default function Faq() {
                             Na página 'Minhas Consultas', localize a consulta e clique no botão **'Cancelar'**. Uma vez confirmada, a consulta será removida permanentemente da sua lista.
                         </p>
                     </div>
-                    {/* FIM: NOVAS PERGUNTAS */}
 
                     <div className="mb-6">
                         <p className="font-semibold text-gray-800 mb-2">

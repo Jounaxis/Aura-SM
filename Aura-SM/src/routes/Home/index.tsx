@@ -14,7 +14,6 @@ export default function Home() {
     const [funcionalidades, setFuncionalidades] = useState<FuncionalidadeType[]>([]);
 
     useEffect(() => {
-        // Dados estáticos simulando uma API para as funcionalidades da home
         const dadosFuncionalidades: FuncionalidadeType[] = [
             {
                 id: 1,

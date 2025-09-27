@@ -55,7 +55,6 @@ export default function Consultas() {
             if (response.ok) {
                 setConsultas(prev => prev.filter(c => c.id !== id));
                 console.log(`Consulta ${id} cancelada com sucesso.`);
-                // Você pode adicionar um state para mostrar uma mensagem de sucesso aqui (e.g., um toast)
             } else {
                 console.error("Erro ao cancelar a consulta:", response.statusText);
                 setError(`Falha ao cancelar a consulta ${id}.`);
@@ -104,13 +103,11 @@ export default function Consultas() {
                                         </span>
                                     </div>
                                     <div className="mt-4 flex space-x-3">
-                                        {/* Link de Edição: Encaminha para o componente EditarConsulta */}
                                         <Link 
                                             to={`/editar/consulta/${consulta.id}`} 
                                             className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition shadow-md flex items-center">
                                             Editar
                                         </Link>
-                                        {/* Botão de Cancelar: Chama a função handleDelete */}
                                         <button 
                                             onClick={() => handleDelete(consulta.id, consulta.pacienteNome)}
                                             className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition shadow-md flex items-center">

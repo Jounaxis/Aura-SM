@@ -36,7 +36,6 @@ export default function Agendar() {
 
         const fetchMedicos = async () => {
             try {
-                // Chamada de API para listar médicos
                 const response = await fetch(`${API_URL}/medicos`);
                 const data: MedicoType[] = await response.json();
                 setMedicos(data);
@@ -53,7 +52,6 @@ export default function Agendar() {
         setStatusMessage('');
 
         try {
-            // Chamada de API para AGENDAR a consulta (POST para /consultas)
             const response = await fetch(`${API_URL}/consultas`, {
                 method: 'POST',
                 headers: {
@@ -66,10 +64,8 @@ export default function Agendar() {
                 setStatusMessage('Consulta agendada com sucesso! Redirecionando...');
                 reset(); 
                 
-                // Redireciona para /consultas após 2 segundos
                 setTimeout(() => navigate('/consultas'), 2000); 
             } else {
-                // Tenta ler o erro da API, se disponível
                 const errorData = await response.json();
                 setStatusMessage(`Erro ao agendar a consulta: ${errorData.message || response.statusText}.`);
                 console.error("Erro na API:", errorData);
@@ -85,11 +81,9 @@ export default function Agendar() {
             <div className="container mx-auto px-4 py-8 max-w-lg">
                 <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Agendar Nova Consulta</h1>
                 <div className="bg-white rounded-xl shadow-2xl p-8">
-                    {/* Usar onSubmit do react-hook-form */}
                     <form onSubmit={onSubmit}>
                         <div className="mb-4">
                             <label htmlFor="idMedico" className="block text-gray-700 font-bold mb-2">Médico:</label>
-                            {/* Registrar o campo */}
                             <select
                                 id="idMedico"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-150"
@@ -105,7 +99,6 @@ export default function Agendar() {
 
                         <div className="mb-4">
                             <label htmlFor="idPaciente" className="block text-gray-700 font-bold mb-2">Nome do Paciente:</label>
-                            {/* Registrar o campo */}
                             <input
                                 type="text"
                                 id="idPaciente"
@@ -119,7 +112,6 @@ export default function Agendar() {
                         <div className="flex flex-col sm:flex-row gap-4 mb-6">
                             <div className="flex-1">
                                 <label htmlFor="idData" className="block text-gray-700 font-bold mb-2">Data:</label>
-                                {/* Registrar o campo */}
                                 <input
                                     type="date"
                                     id="idData"
@@ -131,7 +123,6 @@ export default function Agendar() {
 
                             <div className="flex-1">
                                 <label htmlFor="idHora" className="block text-gray-700 font-bold mb-2">Hora:</label>
-                                {/* Registrar o campo */}
                             <input
                                     type="time"
                                     id="idHora"
@@ -152,7 +143,6 @@ export default function Agendar() {
                         </div>
                     </form>
 
-                    {/* Feedback de status */}
                     {statusMessage && (
                         <div className={`mt-6 p-4 text-center rounded-lg font-semibold ${
                             statusMessage.includes('sucesso') ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-red-100 text-red-700 border border-red-300'

@@ -3,7 +3,6 @@ import type { NavLinkRenderProps } from "react-router-dom";
 
 export default function Menu(){
 
-  // Função que retorna as classes, destacando o link ativo
   const getLink = ({ isActive }: NavLinkRenderProps) =>
   `no-underline font-medium transition-colors text-base ${
     isActive

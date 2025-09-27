@@ -84,7 +84,6 @@ export default function Historico() {
                                 value={dataFinal}
                                 onChange={(e) => setDataFinal(e.target.value)}
                             />
-                            {/* O botão 'Filtrar' é decorativo, pois o filtro é automático com o useEffect */}
                             <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                                 Filtrar
                             </button>
