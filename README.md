@@ -263,3 +263,17 @@ Gerenciamento de Fluxo: **`react-router-dom`** é essencial para a navegação (
 Comunicação com API (CRUD): O portal utiliza chamadas `fetch` para realizar as quatro operações básicas: Criação (`POST` em `Agendar`), Leitura (`GET` em todas as páginas), **Atualização** (`PUT` em `EditarConsulta`), e Exclusão (`DELETE` em `Consultas`).
 
 Usabilidade: **`react-hook-form`** simplifica a coleta de dados e a validação em `Agendar` e, de forma crítica, lida com o **pré-preenchimento** e a validação do formulário em **`EditarConsulta`**, enquanto os *hooks* `useEffect` e `useState` são usados em todas as rotas para gerenciar o estado da aplicação, os dados das APIs e as lógicas de filtro.
+
+---
+
+# Informação sobre a Aba "Dados Pessoais"
+
+Observação importante sobre a aba **"Dados Pessoais"** está visível na navegação, mas sua funcionalidade ainda não está implementada. A construção completa dessa funcionalidade, incluindo a edição e visualização dos dados do usuário, está planejada para ser desenvolvida na **próxima *Sprint***.
+
+### Motivo da Manutenção da Rota
+
+Embora ainda não esteja operacional, mantivemos a aba "Dados Pessoais" no menu com um objetivo específico: demonstrar o tratamento de rotas inválidas ou desconhecidas.
+
+Ao clicar em "Dados Pessoais", o *framework* de roteamento encaminha o usuário para uma rota que, propositalmente, não faz parte do nosso sistema de **(SPA)**. Isso permite que você visualize o nosso componente de **"Página Não Encontrada" (Erro 404)**.
+
+Este comportamento confirma que o sistema de roteamento está configurado corretamente para identificar e tratar situações onde o usuário tenta acessar uma URL que não é válida em nossa aplicação.
