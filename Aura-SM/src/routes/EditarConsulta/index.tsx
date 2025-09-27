@@ -17,18 +17,16 @@ export default function EditarConsulta() {
         hora: ''
     });
 
-    const [medicos, setMedicos] = useState<MedicoType[]>([]); // Corrigido aqui
+    const [medicos, setMedicos] = useState<MedicoType[]>([]); 
 
     useEffect(() => {
         const fetchConsultaAndMedicos = async () => {
-            // Fetch the specific consultation data
             const responseConsulta = await fetch(`http://localhost:3001/consultas/${id}`);
             const dataConsulta: ConsultaType = await responseConsulta.json();
             setConsulta(dataConsulta);
 
-            // Fetch all doctors to populate the select dropdown
             const responseMedicos = await fetch("http://localhost:3001/medicos");
-            const dataMedicos: MedicoType[] = await responseMedicos.json(); // Corrigido aqui
+            const dataMedicos: MedicoType[] = await responseMedicos.json(); 
             setMedicos(dataMedicos);
         };
 
@@ -40,7 +38,6 @@ export default function EditarConsulta() {
         e.preventDefault();
 
         try {
-            // Logic to send the updated data to the server
             await fetch(`http://localhost:3001/consultas/${id}`, {
                 method: 'PUT',
                 headers: {
@@ -50,7 +47,6 @@ export default function EditarConsulta() {
             });
             alert('Consulta atualizada com sucesso!');
 
-            // Redirect to the consultation listing page after the update
             navigate('/consultas');
 
         } catch (error) {
@@ -62,9 +58,7 @@ export default function EditarConsulta() {
 
     return (
         <main className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
-                Editar Consulta
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Editar Consulta</h1>
             <div className="bg-white rounded-lg shadow-md p-6">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">

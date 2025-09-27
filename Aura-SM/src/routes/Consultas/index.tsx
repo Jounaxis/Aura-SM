@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { ConsultaType } from "../../types/consulta";
-import type { MedicoType } from "../../types/medico"; // Importar a tipagem do médico
+import type { MedicoType } from "../../types/medico"; 
 
 export default function Consultas() {
     const [consultas, setConsultas] = useState<ConsultaType[]>([]);
-    const [medicos, setMedicos] = useState<Record<string, string>>({}); // Corrigido
+    const [medicos, setMedicos] = useState<Record<string, string>>({}); 
 
     useEffect(() => {
         try {
@@ -14,9 +14,9 @@ export default function Consultas() {
                 const dataConsultas: ConsultaType[] = await responseConsultas.json();
 
                 const responseMedicos = await fetch("http://localhost:3001/medicos");
-                const dataMedicos: MedicoType[] = await responseMedicos.json(); // Corrigido
+                const dataMedicos: MedicoType[] = await responseMedicos.json(); 
 
-                const medicosMap = dataMedicos.reduce((acc: Record<string, string>, medico: MedicoType) => { // Corrigido
+                const medicosMap = dataMedicos.reduce((acc: Record<string, string>, medico: MedicoType) => { 
                     acc[medico.id] = `${medico.nome} - ${medico.especialidade}`;
                     return acc;
                 }, {});
@@ -32,7 +32,7 @@ export default function Consultas() {
         }
     }, []);
 
-    const getStatus = (data: string, hora: string): string => { // Corrigido
+    const getStatus = (data: string, hora: string): string => { 
         const dataConsulta = new Date(`${data}T${hora}`);
         const dataAtual = new Date();
         return dataConsulta > dataAtual ? 'Confirmada' : 'Realizada';
@@ -41,9 +41,7 @@ export default function Consultas() {
     return (
         <main>
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
-                    Minhas Consultas
-                </h1>
+                <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Minhas Consultas</h1>
 
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Próximas Consultas</h2>
@@ -53,7 +51,7 @@ export default function Consultas() {
                                 <div key={consulta.id} className="p-4 border rounded-lg">
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <h3 className="font-semibold">Consulta com {medicos[consulta.medicoId]}</h3> {/* Corrigido */}
+                                            <h3 className="font-semibold">Consulta com {medicos[consulta.medicoId]}</h3> {/* Usar o map para obter o nome do médico */}
                                             <p className="text-gray-600">Paciente: {consulta.pacienteNome}</p>
                                             <p className="text-gray-600">{consulta.data} às {consulta.hora}</p>
                                         </div>

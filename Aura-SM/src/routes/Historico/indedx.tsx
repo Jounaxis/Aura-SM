@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-// Definindo um tipo para o histórico de consultas, que inclui um diagnóstico
 type HistoricoType = {
     id: number;
     pacienteId: string;
@@ -24,20 +23,16 @@ export default function Historico() {
     const [dataFinal, setDataFinal] = useState<string>('');
     const [historicoFiltrado, setHistoricoFiltrado] = useState<HistoricoType[]>([]);
 
-    // Carrega o histórico de consultas e os médicos quando o componente é montado
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Busca o histórico de consultas
                 const responseHistorico = await fetch("http://localhost:3001/historico");
                 const dataHistorico: HistoricoType[] = await responseHistorico.json();
                 setHistorico(dataHistorico);
 
-                // Busca os médicos
                 const responseMedicos = await fetch("http://localhost:3001/medicos");
                 const dataMedicos: MedicoType[] = await responseMedicos.json();
 
-                // Cria um mapa para acesso rápido aos dados do médico
                 const medicosMap = dataMedicos.reduce((acc, medico) => {
                     acc[medico.id] = medico;
                     return acc;
@@ -53,7 +48,6 @@ export default function Historico() {
         fetchData();
     }, []);
 
-    // Filtra o histórico sempre que as datas de filtro ou o histórico mudam
     useEffect(() => {
         let filteredData = historico;
 
@@ -72,9 +66,7 @@ export default function Historico() {
     return (
         <main>
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
-                    Histórico Médico
-                </h1>
+                <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Histórico Médico</h1>
 
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <div className="mb-6">

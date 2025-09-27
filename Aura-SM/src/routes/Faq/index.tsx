@@ -2,9 +2,7 @@ export default function Faq() {
     return (
         <main>
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">
-                    Perguntas Frequentes
-                </h1>
+                <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Perguntas Frequentes</h1>
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <div className="mb-6">
                         <p className="font-semibold text-gray-800 mb-2">
