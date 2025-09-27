@@ -8,6 +8,7 @@ import Home from './routes/Home/index.jsx'
 import Agendar from './routes/Agendar/index.js'
 import Consultas from './routes/Consultas/index.jsx'
 import Historico from './routes/Historico/indedx.tsx'
+import EditarConsulta from './routes/EditarConsulta/index.tsx'
 import Integrantes from './routes/Integrantes/index.tsx'
 import Faq from './routes/Faq/index.tsx'
 import Sobre from './routes/Sobre/index.tsx'
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       {path: "/", element: <Home/>},
       {path: "/Agendar", element: <Agendar/>},
       {path: "/Consultas", element: <Consultas/>},
+      {path: "/EditarConsulta/:id", element: <EditarConsulta/>},
       {path: "/Historico", element: <Historico/>},
       {path: "/Integrantes", element: <Integrantes/>},
       {path: "/Sobre", element: <Sobre/>},

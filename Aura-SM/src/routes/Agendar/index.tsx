@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"; 
-import type { MedicoType } from "../../types/medico";
-import type { ConsultaType } from "../../types/consulta"; 
+import type { MedicoType } from "../../types/medico"; // Import de tipo restaurado
+import type { ConsultaType } from "../../types/consulta"; // Import de tipo restaurado 
 
 
 type NewConsultaForm = Omit<ConsultaType, 'id'>;
 
 
+// CORREÇÃO: A API base é definida localmente como http://localhost:3001 para evitar
+// o erro de compilação com 'import.meta.env' no ambiente de destino.
 const API_URL = "http://localhost:3001";
 
 export default function Agendar() {
-    const navigate = useNavigate();
+    // useNavigate restaurado para uso real com react-router-dom
+    const navigate = useNavigate(); 
 
     
     const [medicos, setMedicos] = useState<MedicoType[]>([]);
@@ -37,6 +40,7 @@ export default function Agendar() {
 
         const fetchMedicos = async () => {
             try {
+                // Chamada de API para listar médicos
                 const response = await fetch(`${API_URL}/medicos`);
                 const data: MedicoType[] = await response.json();
                 setMedicos(data);
@@ -53,6 +57,7 @@ export default function Agendar() {
         setStatusMessage('');
 
         try {
+            // Chamada de API para AGENDAR a consulta (POST para /consultas)
             const response = await fetch(`${API_URL}/consultas`, {
                 method: 'POST',
                 headers: {
@@ -62,25 +67,28 @@ export default function Agendar() {
             });
 
             if (response.ok) {
-                setStatusMessage('Consulta agendada com sucesso!');
+                setStatusMessage('Consulta agendada com sucesso! Redirecionando...');
                 reset(); 
                 
+                // Redireciona para /consultas após 2 segundos
                 setTimeout(() => navigate('/consultas'), 2000); 
             } else {
-                setStatusMessage('Erro ao agendar a consulta. Tente novamente.');
-                console.error("Erro na API:", await response.json());
+                // Tenta ler o erro da API, se disponível
+                const errorData = await response.json();
+                setStatusMessage(`Erro ao agendar a consulta: ${errorData.message || response.statusText}.`);
+                console.error("Erro na API:", errorData);
             }
         } catch (error) {
             console.error("Erro ao agendar consulta:", error);
-            setStatusMessage('Erro de conexão. Verifique o servidor.');
+            setStatusMessage('Erro de conexão. Verifique o servidor e a URL da API.');
         }
     });
 
     return (
         <main>
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 max-w-lg">
                 <h1 className="text-3xl font-bold text-gray-800 mb-8 pb-2 border-b-2 border-blue-500">Agendar Nova Consulta</h1>
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white rounded-xl shadow-2xl p-8">
                     {/* Usar onSubmit do react-hook-form */}
                     <form onSubmit={onSubmit}>
                         <div className="mb-4">
@@ -88,7 +96,7 @@ export default function Agendar() {
                             {/* Registrar o campo */}
                             <select
                                 id="idMedico"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-150"
                                 {...register("medicoId", { required: "Selecione um médico." })}
                             >
                                 <option value="">Selecione um médico</option>
@@ -96,7 +104,7 @@ export default function Agendar() {
                                     <option key={medico.id} value={medico.id}>{medico.nome} - {medico.especialidade}</option>
                                 ))}
                             </select>
-                            {errors.medicoId && <p className="text-red-500 text-sm mt-1">{errors.medicoId.message}</p>}
+                            {errors.medicoId && <p className="text-red-500 text-sm mt-1 font-medium">{errors.medicoId.message}</p>}
                         </div>
 
                         <div className="mb-4">
@@ -106,40 +114,42 @@ export default function Agendar() {
                                 type="text"
                                 id="idPaciente"
                                 placeholder="Nome Completo"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-150"
                                 {...register("pacienteNome", { required: "O nome do paciente é obrigatório." })}
                             />
-                            {errors.pacienteNome && <p className="text-red-500 text-sm mt-1">{errors.pacienteNome.message}</p>}
+                            {errors.pacienteNome && <p className="text-red-500 text-sm mt-1 font-medium">{errors.pacienteNome.message}</p>}
                         </div>
 
-                        <div className="mb-4">
-                            <label htmlFor="idData" className="block text-gray-700 font-bold mb-2">Data:</label>
-                            {/* Registrar o campo */}
-                            <input
-                                type="date"
-                                id="idData"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                {...register("data", { required: "A data da consulta é obrigatória." })}
-                            />
-                            {errors.data && <p className="text-red-500 text-sm mt-1">{errors.data.message}</p>}
-                        </div>
+                        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                            <div className="flex-1">
+                                <label htmlFor="idData" className="block text-gray-700 font-bold mb-2">Data:</label>
+                                {/* Registrar o campo */}
+                                <input
+                                    type="date"
+                                    id="idData"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-150"
+                                    {...register("data", { required: "A data da consulta é obrigatória." })}
+                                />
+                                {errors.data && <p className="text-red-500 text-sm mt-1 font-medium">{errors.data.message}</p>}
+                            </div>
 
-                        <div className="mb-6">
-                            <label htmlFor="idHora" className="block text-gray-700 font-bold mb-2">Hora:</label>
-                            {/* Registrar o campo */}
+                            <div className="flex-1">
+                                <label htmlFor="idHora" className="block text-gray-700 font-bold mb-2">Hora:</label>
+                                {/* Registrar o campo */}
                             <input
-                                type="time"
-                                id="idHora"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                {...register("hora", { required: "A hora da consulta é obrigatória." })}
-                            />
-                            {errors.hora && <p className="text-red-500 text-sm mt-1">{errors.hora.message}</p>}
+                                    type="time"
+                                    id="idHora"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-200 transition duration-150"
+                                    {...register("hora", { required: "A hora da consulta é obrigatória." })}
+                                />
+                                {errors.hora && <p className="text-red-500 text-sm mt-1 font-medium">{errors.hora.message}</p>}
+                            </div>
                         </div>
                         
                         <div>
                             <button
                                 type="submit"
-                                className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline transition duration-150"
+                                className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline transition duration-150 shadow-md hover:shadow-lg"
                             >
                                 Agendar
                             </button>
@@ -148,8 +158,8 @@ export default function Agendar() {
 
                     {/* Feedback de status */}
                     {statusMessage && (
-                        <div className={`mt-4 p-4 text-center rounded-md ${
-                            statusMessage.includes('sucesso') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        <div className={`mt-6 p-4 text-center rounded-lg font-semibold ${
+                            statusMessage.includes('sucesso') ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-red-100 text-red-700 border border-red-300'
                         }`}>
                             {statusMessage}
                         </div>

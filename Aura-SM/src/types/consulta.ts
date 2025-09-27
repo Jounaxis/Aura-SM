@@ -1,5 +1,5 @@
 export type ConsultaType = {
-    id: number;
+    id: string;
     medicoId: number | string; 
     pacienteNome: string;
     data: string;
