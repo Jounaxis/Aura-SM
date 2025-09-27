@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"; 
-import type { MedicoType } from "../../types/medico"; // Import de tipo restaurado
-import type { ConsultaType } from "../../types/consulta"; // Import de tipo restaurado 
+import type { MedicoType } from "../../types/medico"; 
+import type { ConsultaType } from "../../types/consulta"; 
 
 
 type NewConsultaForm = Omit<ConsultaType, 'id'>;
 
-
-// CORREÇÃO: A API base é definida localmente como http://localhost:3001 para evitar
-// o erro de compilação com 'import.meta.env' no ambiente de destino.
 const API_URL = "http://localhost:3001";
 
 export default function Agendar() {
-    // useNavigate restaurado para uso real com react-router-dom
     const navigate = useNavigate(); 
 
     

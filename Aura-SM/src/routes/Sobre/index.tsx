@@ -8,11 +8,13 @@ export default function Sobre() {
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-xl font-bold text-gray-800 mb-4">Solução Proposta</h2>
                     <p className="text-gray-600 mb-4">
-                        Este projeto foca na criação de um aplicativo hospitalar moderno e de fácil uso, desenhado para simplificar drasticamente a interação entre os pacientes e a instituição de saúde. A proposta é transformar os processos que costumam ser lentos e burocráticos em uma experiência rápida, transparente e centralizada no ambiente digital do paciente. 
+                        A solução que apresentamos é a Aura-SM, um Portal de Auto-Atendimento Médico desenhado para dar ao paciente o controle total e digital sobre sua jornada de saúde. Nosso objetivo primordial é simplificar a gestão de agendamentos, tornando-a rápida, transparente e acessível, eliminando a frustração das longas esperas telefônicas ou da burocracia presencial. O sistema é uma Single Page Application (SPA) construída com tecnologia moderna para garantir uma experiência de uso fluida e confiável.
                     </p>
                     <p className="text-gray-600">
-                        A chave para o sucesso do aplicativo é a integração estratégica com a Aura SM, uma solução de telemedicina especializada. Essa união não é apenas um recurso extra; é o que constrói uma plataforma unificada que vai muito além do básico, oferecendo um ecossistema completo de gestão e cuidado em saúde.
-                        Com a Aura SM integrada, o aplicativo se torna um centro de comando robusto para a saúde do paciente. Ele passa a gerenciar de forma inteligente e segura as funções administrativas essenciais. Isso inclui o agendamento de consultas, o armazenamento e a consulta de históricos médicos, e a atualização de dados pessoais. Tudo isso é feito com uma interface intuitiva que coloca o controle nas mãos do paciente, eliminando a necessidade de processos manuais demorados.
+                        No coração da Aura-SM, o paciente encontra um ciclo de serviço completo. A funcionalidade começa com o agendamento, onde o paciente pode facilmente criar novos compromissos, selecionando o médico e a especialidade de sua escolha. Uma vez agendada, a consulta migra para a área de gestão ativa. Aqui, o foco é a flexibilidade: o paciente tem a liberdade de cancelar a consulta caso haja um imprevisto ou editar seus detalhes — seja trocando o médico ou alterando a data e hora do atendimento.
+                    </p>
+                    <p className="text-gray-600">
+                        O sistema se completa com a funcionalidade de histórico, que transforma dados passados em informação útil. O paciente pode acessar todos os seus atendimentos já realizados, visualizar os diagnósticos e, crucialmente, usar filtros por período para encontrar rapidamente qualquer registro específico. Isso garante que o paciente tenha sempre uma visão completa e imediata de sua trajetória de saúde.
                     </p>
                 </div>
             </div>
