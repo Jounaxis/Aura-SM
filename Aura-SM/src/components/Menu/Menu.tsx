@@ -12,7 +12,7 @@ export default function Menu(){
 
   return(
     <nav className="flex items-center gap-6 border-l pl-6">
-      <NavLink to='/' className={getLink} end>Home</NavLink>
+      <NavLink to='/' className={getLink}>Home</NavLink>
       <NavLink to='/agendar' className={getLink}>Agendar</NavLink>
       <NavLink to='/consultas' className={getLink}>Consultas</NavLink>
       <NavLink to='/historico' className={getLink}>Histórico</NavLink>
