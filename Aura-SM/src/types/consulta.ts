@@ -8,3 +8,13 @@ export type ConsultaType = {
     hora: string;
     status?: ConsultaStatus; 
 };
+
+export type HistoricoType = {
+    id: number;
+    pacienteId: string;
+    medicoId: string;
+    data: string;
+    horario: string;
+    status: ConsultaStatus;
+    diagnostico: string;
+};
