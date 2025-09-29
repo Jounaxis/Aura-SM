@@ -7,8 +7,13 @@ const URL_API = "http://localhost:3001";
 export default function Historico() {
     const [historico, setHistorico] = useState<HistoricoType[]>([]);
     const [medicos, setMedicos] = useState<Record<string, MedicoType>>({});
+    
     const [dataInicial, setDataInicial] = useState<string>('');
     const [dataFinal, setDataFinal] = useState<string>('');
+    
+    const [appliedDataInicial, setAppliedDataInicial] = useState<string>('');
+    const [appliedDataFinal, setAppliedDataFinal] = useState<string>('');
+
     const [historicoFiltrado, setHistoricoFiltrado] = useState<HistoricoType[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -29,9 +34,13 @@ export default function Historico() {
             setIsLoading(true);
             setError(null);
             try {
+
                 const responseHistorico = await fetch(`${URL_API}/historico`);
                 const dataHistorico: HistoricoType[] = await responseHistorico.json();
                 setHistorico(dataHistorico);
+                
+                const initialFiltered = dataHistorico.filter(consulta => consulta.status === 'realizada');
+                setHistoricoFiltrado(initialFiltered);
 
                 const responseMedicos = await fetch(`${URL_API}/medicos`);
                 const dataMedicos: MedicoType[] = await responseMedicos.json();
@@ -58,40 +67,45 @@ export default function Historico() {
     useEffect(() => {
         let filteredData = historico.filter(consulta => consulta.status === 'realizada');
 
-        if (dataInicial && dataFinal) {
-            const inicio = new Date(dataInicial + 'T00:00:00');
-            const fim = new Date(dataFinal + 'T23:59:59');
+        if (appliedDataInicial && appliedDataFinal) {
+            const inicio = new Date(appliedDataInicial + 'T00:00:00');
+            const fim = new Date(appliedDataFinal + 'T23:59:59');
 
             filteredData = filteredData.filter(consulta => {
                 const dataConsulta = new Date(consulta.data + 'T00:00:00');
                 return dataConsulta >= inicio && dataConsulta <= fim;
             });
         }
-        
+
         setHistoricoFiltrado(filteredData);
-    }, [historico, dataInicial, dataFinal]);
+    }, [historico, appliedDataInicial, appliedDataFinal]);
 
     const handleFilterClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); 
+        setAppliedDataInicial(dataInicial);
+        setAppliedDataFinal(dataFinal);
+    };
+
+    const handleClearFilter = () => {
+        setDataInicial('');
+        setDataFinal('');
+        setAppliedDataInicial('');
+        setAppliedDataFinal('');
     };
 
     if (isLoading) {
         return (
-            <main>
-                <div className="flex justify-center items-center h-screen">
-                    <p className="text-xl font-medium text-blue-600">Carregando histórico...</p>
-                </div>
+            <main className="flex justify-center items-center h-screen">
+                <p className="text-xl font-medium text-blue-600">Carregando histórico...</p>
             </main>
         );
     }
 
     if (error) {
         return (
-            <main>
-                <div className="container mx-auto px-4 py-8">
-                    <div className="p-4 bg-red-100 text-red-700 rounded-lg border border-red-400">
-                        {error}
-                    </div>
+            <main className="container mx-auto px-4 py-8">
+                <div className="p-4 bg-red-100 text-red-700 rounded-lg border border-red-400">
+                    {error}
                 </div>
             </main>
         );
@@ -124,11 +138,19 @@ export default function Historico() {
                                     onChange={(e) => setDataFinal(e.target.value)}
                                 />
                             </div>
+                            {/* BOTÃO APLICAR FILTRO */}
                             <button 
                                 onClick={handleFilterClick}
                                 className="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-150 shadow-md transform hover:scale-[1.02]"
                             >
                                 Aplicar Filtro
+                            </button>
+                            {/* NOVO BOTÃO LIMPAR FILTRO */}
+                            <button 
+                                onClick={handleClearFilter}
+                                className="w-full md:w-auto bg-gray-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-600 transition duration-150 shadow-md transform hover:scale-[1.02]"
+                            >
+                                Limpar Filtro
                             </button>
                         </div>
                     </div>
@@ -164,7 +186,7 @@ export default function Historico() {
                                 ) : (
                                     <tr>
                                         <td colSpan={5} className="py-8 px-4 text-center text-gray-500 bg-gray-50 rounded-b-lg">
-                                            Nenhum histórico de consulta **realizada** encontrado {dataInicial && dataFinal ? `entre ${formatDate(dataInicial)} e ${formatDate(dataFinal)}.` : '.'}
+                                            Nenhum histórico de consulta realizada encontrado {appliedDataInicial && appliedDataFinal ? `entre ${formatDate(appliedDataInicial)} e ${formatDate(appliedDataFinal)}.` : '.'}
                                         </td>
                                     </tr>
                                 )}
