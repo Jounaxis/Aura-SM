@@ -31,6 +31,7 @@ export default function EditarConsulta() {
     const navigate = useNavigate();
     
     const [medicos, setMedicos] = useState<MedicoType[]>([]); 
+    const [originalConsulta, setOriginalConsulta] = useState<ConsultaType | null>(null);
     const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
     const { 
@@ -45,6 +46,7 @@ export default function EditarConsulta() {
     useEffect(() => {
         const fetchConsultaAndMedicos = async () => {
             try {
+
                 const responseMedicos = await fetch(`${URL_API}/medicos`);
                 const dataMedicos: MedicoType[] = await responseMedicos.json(); 
                 setMedicos(dataMedicos);
@@ -53,6 +55,7 @@ export default function EditarConsulta() {
                 const dataConsulta: ConsultaType = await responseConsulta.json();
                 
                 reset(dataConsulta);
+                setOriginalConsulta(dataConsulta);
 
             } catch (error) {
                 console.error("Erro ao carregar dados:", error);
@@ -65,9 +68,18 @@ export default function EditarConsulta() {
         document.title = 'Editar Consulta';
     }, [id, reset]);
 
-
-    const onSubmit = async (data: ConsultaType) => {
+    const onSubmit = async (updatedFields: Partial<ConsultaType>) => {
         setStatusMessage(null);
+        
+        if (!originalConsulta) {
+            setStatusMessage({ type: 'error', message: 'Dados originais da consulta não carregados. Tente novamente.' });
+            return;
+        }
+
+        const finalData: ConsultaType = {
+            ...originalConsulta,
+            ...updatedFields
+        };
         
         try {
             const response = await fetch(`${URL_API}/consultas/${id}`, {
@@ -75,7 +87,7 @@ export default function EditarConsulta() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(finalData) 
             });
 
             if (!response.ok) {
@@ -106,11 +118,12 @@ export default function EditarConsulta() {
 
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-4">
-                            <label htmlFor="idMedico" className="block text-gray-700 font-bold mb-2">Médico:</label>
+                            <label htmlFor="idMedico" className="block text-gray-700 font-bold mb-2">Médico (Não Editável):</label>
                             <select
                                 id="idMedico"
-                                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors.medicoId ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                className={`w-full px-3 py-2 border rounded-md bg-gray-100 text-gray-500 cursor-not-allowed focus:outline-none ${errors.medicoId ? 'border-red-500' : 'border-gray-300'}`}
                                 {...register("medicoId", { required: "O médico é obrigatório." })}
+                                disabled 
                                 >
                                 <option value="">Selecione um médico</option>
                                 {medicos.map((medico) => (
@@ -123,12 +136,12 @@ export default function EditarConsulta() {
                         </div>
                         
                         <div className="mb-4">
-                            <label htmlFor="idPaciente" className="block text-gray-700 font-bold mb-2">Nome do Paciente:</label>
+                            <label htmlFor="idPaciente" className="block text-gray-700 font-bold mb-2">Nome do Paciente (Não Editável):</label>
                             <input
                                 type="text"
                                 id="idPaciente"
                                 placeholder="Nome completo do paciente"
-                                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors.pacienteNome ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                className={`w-full px-3 py-2 border rounded-md bg-gray-100 text-gray-500 cursor-not-allowed focus:outline-none ${errors.pacienteNome ? 'border-red-500' : 'border-gray-300'}`}
                                 {...register("pacienteNome", { 
                                     required: "O nome do paciente é obrigatório.", 
                                     minLength: {
@@ -136,10 +149,12 @@ export default function EditarConsulta() {
                                         message: "O nome deve ter pelo menos 3 caracteres."
                                     }
                                 })}
+                                disabled 
                                 />
                             {errors.pacienteNome && <p className="text-red-500 text-xs italic mt-1">{errors.pacienteNome.message}</p>}
                         </div>
 
+                        {/* CAMPO DATA: EDITÁVEL */}
                         <div className="mb-4">
                             <label htmlFor="idData" className="block text-gray-700 font-bold mb-2">Data:</label>
                             <input

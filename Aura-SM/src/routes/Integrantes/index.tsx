@@ -6,8 +6,8 @@ export default function Integrantes() {
                 <div className="bg-white rounded-lg shadow-md p-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div className="flex flex-col items-center">
                         <img 
-                            src="" 
-                            alt="" 
+                            src="/src/assets/Pedro.jpg" 
+                            alt="Integante Pedro Benitez" 
                             className="rounded-full w-40 h-40 object-cover mb-4 shadow-lg"
                         />
                         <p className="text-gray-700 font-semibold">
@@ -16,8 +16,8 @@ export default function Integrantes() {
                     </div>
                     <div className="flex flex-col items-center">
                         <img 
-                            src="" 
-                            alt="" 
+                            src="/src/assets/lucca.jpg" 
+                            alt="Integante Lucca Ramos" 
                             className="rounded-full w-40 h-40 object-cover mb-4 shadow-lg"
                         />
                         <p className="text-gray-700 font-semibold">
@@ -26,8 +26,8 @@ export default function Integrantes() {
                     </div>
                     <div className="flex flex-col items-center">
                         <img 
-                            src="" 
-                            alt="" 
+                            src="/src/assets/Joao.jpg" 
+                            alt="Integante João Victor" 
                             className="rounded-full w-40 h-40 object-cover mb-4 shadow-lg"
                         />
                         <p className="text-gray-700 font-semibold">

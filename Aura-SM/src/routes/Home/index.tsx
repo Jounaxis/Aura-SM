@@ -17,24 +17,24 @@ export default function Home() {
         const dadosFuncionalidades: FuncionalidadeType[] = [
             {
                 id: 1,
+                titulo: 'Agendar Consulta',
+                icone: 'cross',
+                descricao: 'Encontre e agende uma consulta com um de nossos especialistas.',
+                link: '/agendar',
+            },
+            {
+                id: 2,
                 titulo: 'Minhas Consultas',
                 icone: 'calendar',
                 descricao: 'Visualize e gerencie suas consultas agendadas. Confirmações e cancelamentos podem ser feitos aqui.',
                 link: '/consultas',
             },
             {
-                id: 2,
+                id: 3,
                 titulo: 'Histórico Médico',
                 icone: 'read',
                 descricao: 'Acesse seu histórico de consultas, diagnósticos e exames realizados.',
                 link: '/historico',
-            },
-            {
-                id: 3,
-                titulo: 'Agendar Consulta',
-                icone: 'cross',
-                descricao: 'Encontre e agende uma consulta com um de nossos especialistas.',
-                link: '/agendar',
             },
             {
                 id: 4,
