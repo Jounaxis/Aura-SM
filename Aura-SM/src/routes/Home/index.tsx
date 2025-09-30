@@ -1,53 +1,18 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { CiCalendar, CiMedicalCross, CiRead, CiUser } from 'react-icons/ci';
+// Home.tsx
 
-interface FuncionalidadeType {
-    id: number;
-    titulo: string;
-    icone: string;
-    descricao: string;
-    link: string;
-}
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import React from 'react';
+import { CiCalendar, CiMedicalCross, CiRead, CiUser } from 'react-icons/ci';
+import type { IconeNome, RotasType } from '../../types/rotas';
+import { rotasData } from '../../types/rotas'; 
+
 
 export default function Home() {
-    const [funcionalidades, setFuncionalidades] = useState<FuncionalidadeType[]>([]);
 
-    useEffect(() => {
-        const dadosFuncionalidades: FuncionalidadeType[] = [
-            {
-                id: 1,
-                titulo: 'Agendar Consulta',
-                icone: 'cross',
-                descricao: 'Encontre e agende uma consulta com um de nossos especialistas.',
-                link: '/agendar',
-            },
-            {
-                id: 2,
-                titulo: 'Minhas Consultas',
-                icone: 'calendar',
-                descricao: 'Visualize e gerencie suas consultas agendadas. Confirmações e cancelamentos podem ser feitos aqui.',
-                link: '/consultas',
-            },
-            {
-                id: 3,
-                titulo: 'Histórico Médico',
-                icone: 'read',
-                descricao: 'Acesse seu histórico de consultas, diagnósticos e exames realizados.',
-                link: '/historico',
-            },
-            {
-                id: 4,
-                titulo: 'Dados Pessoais',
-                icone: 'user',
-                descricao: 'Atualize suas informações pessoais e de contato de forma segura.',
-                link: '/perfil',
-            }
-        ];
-        setFuncionalidades(dadosFuncionalidades);
-    }, []);
+    const [funcionalidades, setFuncionalidades] = useState<RotasType[]>(rotasData); 
 
-    const getIcon = (iconName: string) => {
+    const getIcon = (iconName: IconeNome): React.ReactElement | null => {
         switch (iconName) {
             case 'calendar':
                 return <CiCalendar className="text-xl" />;
