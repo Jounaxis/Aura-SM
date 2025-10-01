@@ -1,6 +1,10 @@
 # Challenge_Aura-SM
 Pojeto do challenge para o HC
 
+Link para repositório git: [text](https://github.com/Jounaxis/Challenge_Aura-SM)
+
+Link para Video apresentando o sistema:[text](https://youtu.be/m0YwfqeHq7g)
+
 # Componente Principal: Rota Home do Portal de Auto-Atendimento
 
 O código apresentado define o componente **`Home`**, que atua como a **página inicial** e o **painel de controle central** de um sistema de auto-atendimento (provavelmente focado em serviços de saúde). Sua principal função é apresentar ao usuário uma visão clara e **acessos rápidos** às funcionalidades mais importantes do portal.
