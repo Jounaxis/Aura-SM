@@ -1,9 +1,9 @@
 # Challenge_Aura-SM
 Pojeto do challenge para o HC
 
-Link para repositório git: [text](https://github.com/Jounaxis/Challenge_Aura-SM)
+Link para repositório git: [Repositório](https://github.com/Jounaxis/Challenge_Aura-SM)
 
-Link para Video apresentando o sistema:[text](https://youtu.be/m0YwfqeHq7g)
+Link para Video apresentando o sistema:[Video](https://youtu.be/m0YwfqeHq7g)
 
 # Componente Principal: Rota Home do Portal de Auto-Atendimento
 
