@@ -21,7 +21,7 @@ export default function Error() {
                     </p>
                     
                     <Link 
-                        to="/" 
+                        to="/home" 
                         className="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-blue-700 hover:shadow-xl transform hover:scale-105"
                     >
                         Voltar para o Início
