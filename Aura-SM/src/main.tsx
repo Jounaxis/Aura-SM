@@ -4,6 +4,8 @@ import App from './App.tsx'
 import "./globals.css"
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Login from './routes/Login/index.tsx'
+import Cad from './routes/Cad/index.tsx'
 import Home from './routes/Home/index.jsx'
 import Agendar from './routes/Agendar/index.js'
 import Consultas from './routes/Consultas/index.jsx'
@@ -14,22 +16,29 @@ import Faq from './routes/Faq/index.tsx'
 import Sobre from './routes/Sobre/index.tsx'
 import Contato from './routes/Contato/index.tsx'
 import Error from './routes/Error/index.jsx'
+import RotaProt from './components/RotaProt/RotaProt.tsx'
 
 const router = createBrowserRouter([
   {path: "/", element: <App/>, errorElement: <Error/>,
     children: [
-      {path: "/", element: <Home/>},
-      {path: "/agendar", element: <Agendar/>},
-      {path: "/consultas", element: <Consultas/>},
-      {path: "/editar/consulta/:id", element: <EditarConsulta/>},
-      {path: "/historico", element: <Historico/>},
-      {path: "/integrantes", element: <Integrantes/>},
-      {path: "/sobre", element: <Sobre/>},
-      {path: "/contato", element: <Contato/>},
-      {path: "/faq", element: <Faq/>}
-    ]
-  }
-])
+      {path: "/", element: <Login/>},
+      {path: "/cadastro", element: <Cad/>},
+      {element: <RotaProt/>,
+        children: [
+          {path: "/home", element: <Home/>},
+          {path: "/agendar", element: <Agendar/>},
+          {path: "/consultas", element: <Consultas/>},
+          {path: "/editar/consulta/:id", element: <EditarConsulta/>},
+          {path: "/historico", element: <Historico/>},
+          {path: "/integrantes", element: <Integrantes/>},
+          {path: "/sobre", element: <Sobre/>},
+          {path: "/contato", element: <Contato/>},
+          {path: "/faq", element: <Faq/>}
+        ]
+      }
+      ]
+    }
+  ])
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
